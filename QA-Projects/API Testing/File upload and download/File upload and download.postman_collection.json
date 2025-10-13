@@ -1,0 +1,157 @@
+{
+	"info": {
+		"_postman_id": "ddeb19cc-4309-447f-8a04-da848b7d6d47",
+		"name": "File upload and download",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47497534",
+		"_collection_link": "https://soroushjamalif79-222140.postman.co/workspace/soroush-jamali's-Workspace~0c27162b-d491-4159-81cc-3d011f4cd5df/collection/47497534-ddeb19cc-4309-447f-8a04-da848b7d6d47?source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Single File Upload",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify response\", function () {\r",
+							"    responseJson=pm.response.json();\r",
+							"    pm.expect(responseJson.fileName).to.eql(\"TextFile1.txt\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/E:/sj 1/tester/TextFile1.txt"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/uploadFile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"uploadFile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Multiple File Uploads",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify response\", function () {\r",
+							"    responseJson=pm.response.json();\r",
+							"    pm.expect(responseJson[0].fileName).to.eql(\"TextFile1.txt\");\r",
+							"    pm.expect(responseJson[1].fileName).to.eql(\"TextFile2.txt\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "files",
+							"type": "file",
+							"src": [
+								"/E:/sj 1/tester/TextFile1.txt",
+								"/E:/sj 1/tester/TextFile2.txt"
+							]
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/uploadMultipleFiles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"uploadMultipleFiles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "File Download",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"verify text value\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"text file 1\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:8080/downloadFile/TextFile1.txt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"downloadFile",
+						"TextFile1.txt"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

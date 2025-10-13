@@ -1,0 +1,114 @@
+{
+	"info": {
+		"_postman_id": "ff4d93e1-a210-4125-9ab3-b174c929b5fc",
+		"name": "PostmanScripting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47497534",
+		"_collection_link": "https://soroushjamalif79-222140.postman.co/workspace/soroush-jamali's-Workspace~0c27162b-d491-4159-81cc-3d011f4cd5df/collection/47497534-ff4d93e1-a210-4125-9ab3-b174c929b5fc?source=collection_link"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.globals.set(\"userid\", \"2\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//status code validation\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Multiple assertions\r",
+							"pm.test(\"Validate multiple fields in response\", function () {\r",
+							"    responseJson=pm.response.json();\r",
+							"    pm.expect(responseJson.data.id).to.eql(2);\r",
+							"    pm.expect(responseJson.data.email).to.eql(\"janet.weaver@reqres.in\");\r",
+							"    pm.expect(responseJson.data.first_name).to.eql(\"Janet\");\r",
+							"    pm.expect(responseJson.data.last_name).to.eql(\"Weaver\");\r",
+							"});\r",
+							"\r",
+							"//Handling responses that dont parse\r",
+							"pm.test(\"Body contains string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"janet.weaver@reqres.in\");\r",
+							"});\r",
+							"\r",
+							"//status code being one of the set\r",
+							"pm.test(\"Successful status code\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200 , 201]);\r",
+							"});\r",
+							"\r",
+							"//Tesring headers\r",
+							"pm.test(\"Content-Type header present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type value\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json; charset=utf-8\");\r",
+							"});\r",
+							"\r",
+							"//Testing cookies\r",
+							"pm.test(\"cookie is present\", function () {\r",
+							"    pm.expect(pm.cookies.has(\"__cfduid\")).to.be.true;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"cookie value check\", function () {\r",
+							"    pm.expect(pm.cookies.get(\"__cfduid\")).to.eql(\"xuwyefy837t83df\");\r",
+							"});\r",
+							"\r",
+							"//Response Time\r",
+							"pm.test(\"Response time less than 3 s\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "key",
+							"value": "x-api-key",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "reqres-free-v1",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users/{{userid}}",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{userid}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
